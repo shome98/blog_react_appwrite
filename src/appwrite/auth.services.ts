@@ -1,12 +1,13 @@
 import { Account, ID } from "appwrite";
 import client from "./client";
+import type { IUserCreate, IUserLogin } from "../types/auth.types";
 
 export class AuthService {
     private readonly account;
     constructor() {
         this.account = new Account(client);
     }
-    async createAccount({ email, password, name }: { email: string, password: string, name: string }) {
+    async createAccount({ email, password, name }: IUserCreate) {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
             if (userAccount) {
@@ -18,7 +19,7 @@ export class AuthService {
         }
         return null;
     }
-    async login({ email, password }: { email: string, password: string }) {
+    async login({ email, password }: IUserLogin) {
         try {
             return await this.account.createEmailPasswordSession(email, password);
         } catch (error) {
