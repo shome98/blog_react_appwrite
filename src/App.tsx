@@ -1,19 +1,42 @@
 import "./App.css";
-import Signup from "./components/Signup";
-import AuthProvider from "./components/AuthProvider";
-import Login from "./components/Login";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import { useEffect, useState } from "react";
+import authService from "./appwrite/auth.services";
+import { useDispatch } from "react-redux";
+import { login, logout } from "./store/auth.slice";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  return (
+  const [loading, setLading] = useState(true);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    authService.getCurrentAccount()
+      .then((userData) => {
+        if (userData) {
+          dispatch(login(userData));
+        }
+        else {
+          dispatch(logout());
+        }
+      })
+      .finally(() => setLading(false));
+  })
+  return !loading ? (
     <>
-      <h1 className="text-3xl text-center">hi from react</h1>
-      <div className="w-40 mx-auto flex flex-row items-center"></div>
-      <AuthProvider>
-        <Signup />
-        <Login/>
-      </AuthProvider>
+
+      <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+        <div className='w-full block'>
+          <Header />
+          <main>
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
+      </div>
     </>
-  );
+  ) : <h1 className="text-3xl text-center">hi from react</h1>;
+
 }
 
 export default App;
