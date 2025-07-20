@@ -74,5 +74,5 @@ export class ArticleService {
         return this.bucket.getFilePreview(config.appwriteBucketId, fileId);
     }
 }
-const service = new ArticleService();
-export default service;
+const articleService = new ArticleService();
+export default articleService;
