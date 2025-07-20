@@ -3,7 +3,7 @@ import { forwardRef, useId, type InputHTMLAttributes } from "react";
 // Define props by extending native input attributes for better autocompletion and type safety
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  type?: "text" | "email" | "password" | "number" | "tel" | "url" | "search";
+  type?: "text" | "email" | "password" | "number" | "tel" | "url" | "search"|"file";
   className?: string;
 }
 
