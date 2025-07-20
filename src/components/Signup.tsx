@@ -12,14 +12,14 @@ const Signup = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm<IUserCreate>();
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const create = async (data: IUserCreate) => {
     setError("");
     try {
       const userData = await authService.createAccount(data);
       if (userData) dispatch(login(userData));
-      //navigate("/");
+      navigate("/");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -35,12 +35,12 @@ const Signup = () => {
           </h2>
           <p className="mt-2 text-center text-base text-black/100">
             Already have an account?&nbsp;
-            {/* <Link
-          to="/login"
-          className="font-medium text-primary transition-all duration-200 hover:underline"
-        >
-          Sign In
-        </Link> */}
+            <Link
+              to="/login"
+              className="font-medium text-primary transition-all duration-200 hover:underline"
+            >
+              Sign In
+            </Link>
           </p>
         </div>
         {error && <p className="text-red-500 mt-8 text-center">{error}</p>}
